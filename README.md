@@ -1,6 +1,6 @@
 # Universidad Tecnologica Nacional
 ## Ingenieria de Software - 4K1 - 2020
-### Grupo Nº 5 - 4K1
+### Grupo Nº 1 - 4K1
 
 Repositorio publico utilizado para aplicar los conceptos de administración de configuración de software vistos durante el año en la cátedra de Ingeniería de Software
 
