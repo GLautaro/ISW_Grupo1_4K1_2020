@@ -8,11 +8,11 @@ Repositorio publico utilizado para aplicar los conceptos de administración de c
 ```
 ISW_Grupo1_4K1_2020
 ├── Cursado
-│    └── Bibliografia
-├── Trabajos prácticos
-│    ├── Evaluables
-│    └── No evaluables
-├── Trabajos conceptuales
+│    ├── Bibliografia
+│    └── Trabajos prácticos
+│    │    ├── Evaluables
+│    │    └── No evaluables
+│    └── Trabajos conceptuales
 ├── Material de clase
 └── README.md
 ```
