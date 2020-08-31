@@ -1,8 +1,16 @@
-# Universidad Tecnologica Nacional
+# Universidad Tecnologica Nacional - FRC
 ## Ingenieria de Software - 4K1 - 2020
-### Grupo Nº 1 - 4K1
 
 _Repositorio publico utilizado para aplicar los conceptos de administración de configuración de software vistos durante el año en la cátedra de Ingeniería de Software_
+
+### Grupo Nº 1
+#### Miembros:
+ * Arroyo, Camila
+ * Azabal, Dahyana
+ * Chiavassa, Agustín
+ * Gonzalez, Lautaro
+ * Mok, Ivan
+ * Vivas Castillo, Matías
 
 ### Estructura del repositorio
 ```
