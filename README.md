@@ -13,7 +13,21 @@ ISW_Grupo1_4K1_2020
 │    │    └── Papers
 │    └── Trabajos prácticos
 │    │    ├── Evaluables
+|    |    |     ├── Práctico 1
+|    |    |     ├── Práctico 4
+|    |    |     ├── Práctico 5
+|    |    |     ├── Práctico 6
+|    |    |     ├── Práctico 7
+|    |    |     ├── Práctico 8
+|    |    |     ├── Práctico 12
+|    |    |     ├── Práctico 13
+|    |    |     ├── Práctico 14
 │    │    └── No evaluables
+|    |    |     ├── Práctico 2
+|    |    |     ├── Práctico 3
+|    |    |     ├── Práctico 9
+|    |    |     ├── Práctico 10
+|    |    |     ├── Práctico 11
 │    └── Trabajos conceptuales
 |    └── Parciales
 │    │    ├── Primer Parcial
@@ -30,8 +44,8 @@ ISW_Grupo1_4K1_2020
 | Paper | ISW_PAPER_\<nombre-paper>.pdf | Cursado/Bibliografía/Papers |
 | Articulo | ISW_ART_\<nombre-articulo>_\<autor-articulo>.pdf | Cursado/Bibliografia/Articulos |
 | Filmina | ISW_FILM_\<nro-filmina>_\<tema-filmina> . pdf | Cursado/Material de Clase/Teórico |
-| Trabajo Práctico No Evaluable | ISW_TPNE\<nro-tp> - \<nombre-tp> . (pdf \| doc \| docx \| gdoc) | Cursado/Trabajos prácticos/No evaluables |
-| Trabajo Práctico Evaluable | ISW_TPE\<nro-tp>_\<nombre-tp>.(pdf \| doc \| docx \| gdoc) | Cursado/Trabajos Practicos/Evaluables |
+| Trabajo Práctico No Evaluable | ISW_TPNE\<nro-tp> - \<nombre-tp> . (pdf \| doc \| docx \| gdoc) | Cursado/Trabajos prácticos/No evaluables/Práctico X |
+| Trabajo Práctico Evaluable | ISW_TPE\<nro-tp>_\<nombre-tp>.(pdf \| doc \| docx \| gdoc) | Cursado/Trabajos Practicos/Evaluables/Práctico X |
 | Trabajo Conceptual | ISW_TPC\<nro-tp>_\<nombre-tp>. (pdf \| doc \| docx \| gdoc) | Cursado/Trabajos conceptuales |
 | Guia de trabajos | ISW_GUIA_\<nombre-guia> . pdf | Cursado/Material de Clase/Practico |
 | Material extra utilizado en Clases Prácticas | ISW_MCP_\<nombre-documento>.(pdf \| doc \| docx \| gdoc) | Cursado/Material de Clase/Práctico |
