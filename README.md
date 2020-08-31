@@ -9,11 +9,16 @@ Repositorio publico utilizado para aplicar los conceptos de administración de c
 ISW_Grupo1_4K1_2020
 ├── Cursado
 │    ├── Bibliografia
+|    |    ├── Libros
+│    │    └── Papers
 │    └── Trabajos prácticos
 │    │    ├── Evaluables
 │    │    └── No evaluables
 │    └── Trabajos conceptuales
-├── Material de clase
+|    └── Parciales
+│    │    ├── Primer Parcial
+│    │    └── Segundo Parcial
+|    └── Reglamento y Lineamientos
 └── README.md
 ```
 ### Ítems de configuración - Definicion de reglas de nombrado
