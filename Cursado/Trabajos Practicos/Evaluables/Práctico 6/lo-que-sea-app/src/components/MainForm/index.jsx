@@ -48,13 +48,22 @@ const MainForm = () => {
     const initialOrderData = {
         description: "",
         images: [],
+        addressPickUp: "",
+        numberPickUp: "",
+        cityPickUp: "",
+        referencePickUp: "",
+        addressDelivery: "",
+        numberDelivery: "",
+        cityDelivery: "",
+        referenceDelivery: "",
         immediately: true,
-    }
+        date: new Date(),
+    };
     const [orderData, setOrderData] = useState(initialOrderData);
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
-        setOrderData((prevState) => ({ ...prevState, [name]: value}));
+        const { name, value } = e.target;
+        setOrderData((prevState) => ({ ...prevState, [name]: value }));
     }
 
     const handleImageUpload = (image) => {
@@ -86,12 +95,12 @@ const MainForm = () => {
     };
 
     return (
-        <main className={classes.layout}>
+        <div className={classes.layout}>
             <Paper className={classes.paper}>
                 <Typography component="h1" variant="h4" align="center" gutterBottom>
                     Pedi lo que sea
                 </Typography>
-                <Typography component="body" variant="body1" align="center" gutterBottom>
+                <Typography variant="body1" align="center" gutterBottom>
                     Buscaremos en tu ciudad para llevarte lo que necesites
                 </Typography>
                 <Stepper activeStep={activeStep} className={classes.stepper}>
@@ -129,7 +138,7 @@ const MainForm = () => {
                     )}
                 </>
             </Paper>
-        </main>
+        </div>
     );
 };
 

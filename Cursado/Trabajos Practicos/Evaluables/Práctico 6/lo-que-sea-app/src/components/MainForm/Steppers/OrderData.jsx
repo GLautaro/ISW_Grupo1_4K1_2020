@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, Grid, TextField, InputLabel, Divider, Select, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { DateTimePicker } from "@material-ui/pickers";
 import { DropzoneArea } from 'material-ui-dropzone';
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +58,8 @@ const OrderData = ({orderData, handleChange, handleImageUpload}) => {
                 id="addressPickUp"
                 name="addressPickUp"
                 label="Calle"
+                value={orderData.addressPickUp}
+                onChange={handleChange}
                 fullWidth
                 />
             </Grid>
@@ -67,6 +70,8 @@ const OrderData = ({orderData, handleChange, handleImageUpload}) => {
                 name="numberPickUp"
                 label="Numero"
                 type="number"
+                value={orderData.numberPickUp}
+                onChange={handleChange}
                 fullWidth
                 />
             </Grid>
@@ -76,6 +81,8 @@ const OrderData = ({orderData, handleChange, handleImageUpload}) => {
                 id="cityPickUp"
                 name="cityPickUp"
                 label="Ciudad"
+                value={orderData.cityPickUp}
+                onChange={handleChange}
                 fullWidth
                 />
             </Grid>
@@ -84,6 +91,8 @@ const OrderData = ({orderData, handleChange, handleImageUpload}) => {
                 id="referencePickUp"
                 name="referencePickUp"
                 label="Referencia"
+                value={orderData.referencePickUp}
+                onChange={handleChange}
                 fullWidth
                 />
             </Grid>
@@ -99,6 +108,8 @@ const OrderData = ({orderData, handleChange, handleImageUpload}) => {
                 id="addressDelivery"
                 name="addressDelivery"
                 label="Calle"
+                value={orderData.addressDelivery}
+                onChange={handleChange}
                 fullWidth
                 />
             </Grid>
@@ -109,6 +120,8 @@ const OrderData = ({orderData, handleChange, handleImageUpload}) => {
                 name="numberDelivery"
                 label="Numero"
                 type="number"
+                value={orderData.numberDelivery}
+                onChange={handleChange}
                 fullWidth
                 />
             </Grid>
@@ -118,6 +131,8 @@ const OrderData = ({orderData, handleChange, handleImageUpload}) => {
                 id="cityDelivery"
                 name="cityDelivery"
                 label="Ciudad"
+                value={orderData.cityDelivery}
+                onChange={handleChange}
                 fullWidth
                 />
             </Grid>
@@ -126,6 +141,8 @@ const OrderData = ({orderData, handleChange, handleImageUpload}) => {
                 id="referenceDelivery"
                 name="referenceDelivery"
                 label="Referencia"
+                value={orderData.referenceDelivery}
+                onChange={handleChange}
                 fullWidth
                 />
             </Grid>
@@ -134,11 +151,29 @@ const OrderData = ({orderData, handleChange, handleImageUpload}) => {
         <Grid container spacing={3}>
             <Grid item xs={12}>
                 <InputLabel className={classes.fileLabel}>Indique hora de entrega</InputLabel>
-                <Select fullWidth value={orderData.immediately}>
+                <Select 
+                fullWidth 
+                name="immediately"
+                id="immediately"
+                value={orderData.immediately} 
+                onChange={handleChange}>
                     <MenuItem value={true}>Lo antes posible</MenuItem>
                     <MenuItem value={false}>Programar pedido</MenuItem>
                 </Select>
             </Grid>
+            {!orderData.immediately && (
+                <Grid item xs={12}>
+                    <DateTimePicker
+                        disablePast
+                        fullWidth
+                        name='date'
+                        id='date'
+                        value={orderData.date}
+                        label='Seleccione fecha y hora'
+                        format='dd/MM/yyyy hh:mm'
+                    />
+                </Grid>
+            )}
         </Grid>
         </>
     );
