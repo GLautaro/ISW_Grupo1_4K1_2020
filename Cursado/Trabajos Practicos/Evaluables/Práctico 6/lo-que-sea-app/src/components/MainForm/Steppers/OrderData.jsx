@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const OrderData = ({orderData, handleChange, handleImageUpload}) => {
+const OrderData = ({orderData, handleChange, handleImageUpload, handleSelectedDate}) => {
     const classes = useStyles();
 
     return (
@@ -168,9 +168,11 @@ const OrderData = ({orderData, handleChange, handleImageUpload}) => {
                         fullWidth
                         name='date'
                         id='date'
+                        ampm
                         value={orderData.date}
+                        onChange={handleSelectedDate}
                         label='Seleccione fecha y hora'
-                        format='dd/MM/yyyy hh:mm'
+                        format='dd/MM/yyyy HH:mm'
                     />
                 </Grid>
             )}

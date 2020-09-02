@@ -64,25 +64,33 @@ const MainForm = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setOrderData((prevState) => ({ ...prevState, [name]: value }));
-    }
+    };
+
+    const handleSelectedDate = (e) => {
+        setOrderData((prevState) => ({ ...prevState, 'date': e }));
+    };
 
     const handleImageUpload = (image) => {
         let imageArray = orderData.images
         imageArray.push(image);
         setOrderData((prevState) => ({ ...prevState, 'images': imageArray}));
-    }
+    };
 
     const getStepContent = (step) => {
         switch (step) {
           case 0:
-            return <OrderData orderData={orderData} handleChange={handleChange} handleImageUpload={handleImageUpload}/>
+            return <OrderData 
+            orderData={orderData} 
+            handleChange={handleChange} 
+            handleImageUpload={handleImageUpload}
+            handleSelectedDate={handleSelectedDate}/>
           case 1:
             return <Payment/>
           case 2:
             return <Review/>
           default:
             throw new Error('Unknown step');
-        }
+        };
     };
 
     const handleNext = () => {
