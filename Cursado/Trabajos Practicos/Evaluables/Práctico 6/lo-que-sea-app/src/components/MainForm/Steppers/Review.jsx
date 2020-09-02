@@ -1,10 +1,14 @@
 import React from 'react';
+import { Typography } from '@material-ui/core';
 
-const Review = () => {
+const Review = ({orderData}) => {
     return (
-        <div>
-            
-        </div>
+        <>
+        <Typography variant='h6' gutterBottom>
+            Resumen del pedido
+        </Typography>
+
+        </>
     );
 };
 
