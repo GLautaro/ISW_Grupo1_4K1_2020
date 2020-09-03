@@ -58,6 +58,13 @@ const MainForm = () => {
         referenceDelivery: "",
         immediately: true,
         date: new Date(),
+        cash: true,
+        amount: "",
+        cardNumber: "",
+        cardName: "",
+        expDate: "",
+        cvv: "",
+        dni: ""
     };
     const [orderData, setOrderData] = useState(initialOrderData);
 
@@ -85,7 +92,9 @@ const MainForm = () => {
             handleImageUpload={handleImageUpload}
             handleSelectedDate={handleSelectedDate}/>
           case 1:
-            return <Payment/>
+            return <Payment 
+            orderData={orderData}
+            handleChange={handleChange} />
           case 2:
             return <Review/>
           default:
