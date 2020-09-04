@@ -1,5 +1,4 @@
 import React, { useCallback, useState, useEffect } from "react";
-import Geocode from "react-geocode";
 import {
   Typography,
   Grid,
@@ -13,7 +12,6 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { DateTimePicker } from "@material-ui/pickers";
-import { DropzoneArea } from "material-ui-dropzone";
 import MapGoogle from "./Map";
 
 export const cities = [
@@ -121,8 +119,7 @@ const DeliveryAddress = ({
             fullWidth
           />
         </Grid>
-
-        <Grid item xs={9}>
+        <Grid item xs={8}>
           <TextField
             required
             id="addressPickUp"
@@ -134,7 +131,7 @@ const DeliveryAddress = ({
             fullWidth
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <TextField
             required
             id="numberPickUp"
@@ -202,11 +199,11 @@ const DeliveryAddress = ({
             }}
           >
             {cities.map((city) => (
-              <MenuItem value={city.id}>{city.name}</MenuItem>
+              <MenuItem value={city.name}>{city.name}</MenuItem>
             ))}
           </TextField>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8}>
           <TextField
             required
             id="addressDelivery"
@@ -217,7 +214,7 @@ const DeliveryAddress = ({
             fullWidth
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <TextField
             required
             id="numberDelivery"

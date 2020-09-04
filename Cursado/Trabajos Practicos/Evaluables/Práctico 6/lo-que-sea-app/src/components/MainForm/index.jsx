@@ -131,7 +131,7 @@ const MainForm = () => {
         orderData={orderData}
         handleChange={handleChange} />;
       case 3:
-        return <Review />;
+        return <Review orderData={orderData}/>;
       default:
         throw new Error("Unknown step");
     }

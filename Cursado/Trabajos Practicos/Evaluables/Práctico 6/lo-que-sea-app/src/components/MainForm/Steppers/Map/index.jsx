@@ -1,5 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useRef, useCallback } from "react";
 import {
   GoogleMap,
   LoadScript,

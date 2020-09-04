@@ -4,12 +4,8 @@ import {
   Grid,
   TextField,
   InputLabel,
-  Divider,
-  Select,
-  MenuItem,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { DateTimePicker } from "@material-ui/pickers";
 import { DropzoneArea } from "material-ui-dropzone";
 
 const useStyles = makeStyles((theme) => ({

@@ -7,12 +7,10 @@ import esLocale from "date-fns/locale/es";
 
 function App() {
   return (
-    <>
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
       <NavBar/>
       <MainForm/>
     </MuiPickersUtilsProvider>
-    </>
   );
 }
 
