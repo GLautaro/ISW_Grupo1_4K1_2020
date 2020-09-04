@@ -19,7 +19,9 @@
     "react-geocode": "^0.2.1",
     "react-google-maps": "^9.4.5",
     "react-leaflet": "^2.7.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-text-mask": "^5.4.3",
+    "text-mask-addons": "^3.8.0"
   },
   "scripts": {
     "start": "react-scripts start",

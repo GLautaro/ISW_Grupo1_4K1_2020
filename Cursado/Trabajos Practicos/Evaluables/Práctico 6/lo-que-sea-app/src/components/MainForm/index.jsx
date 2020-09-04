@@ -56,23 +56,30 @@ const steps = [
 ];
 
 const MainForm = () => {
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
-  const initialOrderData = {
-    description: "",
-    images: [],
-    addressPickUp: "",
-    numberPickUp: "",
-    cityPickUp: "",
-    referencePickUp: "",
-    addressDelivery: "",
-    numberDelivery: "",
-    cityDelivery: cities[0].id,
-    referenceDelivery: "",
-    immediately: true,
-    date: new Date(),
-  };
-  const [orderData, setOrderData] = useState(initialOrderData);
+    const classes = useStyles();
+    const [activeStep, setActiveStep] = useState(0);
+    const initialOrderData = {
+        description: "",
+        images: [],
+        addressPickUp: "",
+        numberPickUp: "",
+        cityPickUp: "",
+        referencePickUp: "",
+        addressDelivery: "",
+        numberDelivery: "",
+        cityDelivery: cities[0].id,
+        referenceDelivery: "",
+        immediately: true,
+        date: new Date(),
+        cash: true,
+        amount: "",
+        cardNumber: "",
+        cardName: "",
+        expDate: "",
+        cvv: "",
+        dni: ""
+    };
+    const [orderData, setOrderData] = useState(initialOrderData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -120,7 +127,9 @@ const MainForm = () => {
           />
         );
       case 2:
-        return <Payment />;
+        return <Payment 
+        orderData={orderData}
+        handleChange={handleChange} />;
       case 3:
         return <Review />;
       default:
