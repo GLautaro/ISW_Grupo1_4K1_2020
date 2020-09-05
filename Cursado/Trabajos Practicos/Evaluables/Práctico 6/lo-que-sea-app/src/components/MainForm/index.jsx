@@ -13,6 +13,8 @@ import OrderData from "./Steppers/OrderData";
 import Payment from "./Steppers/Payment";
 import Review from "./Steppers/Review";
 import DeliveryAddress, { cities } from "./Steppers/DeliveryAddress";
+import * as yup from "yup";
+import Formik, { useFormik } from "formik";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -55,33 +57,81 @@ const steps = [
   "Resumen",
 ];
 
+let validationSchema = [
+  yup.object().shape({
+    description: yup.string().required("Debe ingresar una descripción"),
+    images: yup.array(),
+  }),
+  yup.object().shape({
+    addressPickUp: yup.string().required(),
+    numberPickUp: yup.number().required(),
+    cityPickUp: yup.string().required(),
+    referencePickUp: yup.string(),
+    addressDelivery: yup.string().required(),
+    numberDelivery: yup.number().required(),
+    cityDelivery: yup.string().required(),
+    referenceDelivery: yup.string(),
+    immediately: yup.boolean(),
+    date: yup.date().when("immediately", {
+      is: true,
+      then: yup.date().required(),
+    }),
+  }),
+  yup.object().shape({
+    cash: yup.boolean().required(),
+    amount: yup.number().when("cash", {
+      is: true,
+      then: yup.number().required(),
+    }),
+    cardNumber: yup.string().when("cash", {
+      is: false,
+      then: yup.string().required().length(19),
+    }),
+    cardName: yup.string().when("cash", {
+      is: false,
+      then: yup.string().required(),
+    }),
+    expDate: yup.string().when("cash", {
+      is: false,
+      then: yup.string().length(5).required(),
+    }),
+    cvv: yup.string().when("cash", {
+      is: false,
+      then: yup.string().length(4).required(),
+    }),
+    dni: yup.string().when("cash", {
+      is: false,
+      then: yup.string().required(),
+    }),
+  }),
+];
 const MainForm = () => {
-    const classes = useStyles();
-    const [activeStep, setActiveStep] = useState(0);
-    const initialOrderData = {
-        description: "",
-        images: [],
-        addressPickUp: "",
-        numberPickUp: "",
-        cityPickUp: "",
-        referencePickUp: "",
-        addressDelivery: "",
-        numberDelivery: "",
-        cityDelivery: cities[0].id,
-        referenceDelivery: "",
-        immediately: true,
-        date: new Date(),
-        cash: true,
-        amount: "",
-        cardNumber: "",
-        cardName: "",
-        expDate: "",
-        cvv: "",
-        dni: ""
-    };
-    const [orderData, setOrderData] = useState(initialOrderData);
+  const classes = useStyles();
+  const [activeStep, setActiveStep] = useState(0);
+  const initialOrderData = {
+    description: "",
+    images: [],
+    addressPickUp: "",
+    numberPickUp: "",
+    cityPickUp: "",
+    referencePickUp: "",
+    addressDelivery: "",
+    numberDelivery: "",
+    cityDelivery: "",
+    referenceDelivery: "",
+    immediately: true,
+    date: new Date(),
+    cash: true,
+    amount: "",
+    cardNumber: "",
+    cardName: "",
+    expDate: "",
+    cvv: "",
+    dni: "",
+  };
+  const [orderData, setOrderData] = useState(initialOrderData);
 
-  const handleChange = (e) => {
+  const handleChange_2 = (e) => {
     const { name, value } = e.target;
     setOrderData((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -110,8 +160,11 @@ const MainForm = () => {
       case 0:
         return (
           <OrderData
-            orderData={orderData}
+            orderData={values}
             handleChange={handleChange}
+            setFieldValue={setFieldValue}
+            errors={errors}
+            touched={touched}
             handleImageUpload={handleImageUpload}
             handleSelectedDate={handleSelectedDate}
           />
@@ -119,7 +172,10 @@ const MainForm = () => {
       case 1:
         return (
           <DeliveryAddress
-            orderData={orderData}
+            orderData={values}
+            setFieldValue={setFieldValue}
+            errors={errors}
+            touched={touched}
             handleChange={handleChange}
             handleImageUpload={handleImageUpload}
             handleSelectedDate={handleSelectedDate}
@@ -127,11 +183,17 @@ const MainForm = () => {
           />
         );
       case 2:
-        return <Payment 
-        orderData={orderData}
-        handleChange={handleChange} />;
+        return (
+          <Payment
+            orderData={values}
+            setFieldValue={setFieldValue}
+            errors={errors}
+            touched={touched}
+            handleChange={handleChange}
+          />
+        );
       case 3:
-        return <Review orderData={orderData}/>;
+        return <Review orderData={values} />;
       default:
         throw new Error("Unknown step");
     }
@@ -145,7 +207,28 @@ const MainForm = () => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+  const handleSubmitForm = () => {
+    console.log("pasa");
+    if (activeStep === 3) {
+      console.log("Ready");
+    } else {
+      console.log("Pasa");
+      handleNext();
+    }
+  };
 
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    errors,
+    touched,
+    setFieldValue,
+  } = useFormik({
+    initialValues: initialOrderData,
+    validationSchema: validationSchema[activeStep],
+    onSubmit: handleSubmitForm,
+  });
   return (
     <div className={classes.layout}>
       <Paper className={classes.paper}>
@@ -175,22 +258,26 @@ const MainForm = () => {
             </>
           ) : (
             <>
-              {getStepContent(activeStep)}
-              <div className={classes.buttons}>
-                {activeStep !== 0 && (
-                  <Button onClick={handleBack} className={classes.button}>
-                    Atras
+              <form onSubmit={handleSubmit}>
+                {getStepContent(activeStep)}
+                <div className={classes.buttons}>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack} className={classes.button}>
+                      Atras
+                    </Button>
+                  )}
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                  >
+                    {activeStep === steps.length - 1
+                      ? "Confirmar"
+                      : "Siguiente"}
                   </Button>
-                )}
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.button}
-                >
-                  {activeStep === steps.length - 1 ? "Confirmar" : "Siguiente"}
-                </Button>
-              </div>
+                </div>
+              </form>
             </>
           )}
         </>

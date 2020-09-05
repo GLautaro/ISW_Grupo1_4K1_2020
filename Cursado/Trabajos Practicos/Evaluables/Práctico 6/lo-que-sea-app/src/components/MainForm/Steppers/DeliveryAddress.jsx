@@ -58,20 +58,20 @@ const useStyles = makeStyles((theme) => ({
 const DeliveryAddress = ({
   orderData,
   handleChange,
-  handleImageUpload,
   handleSelectedDate,
   handleSelectedLocation,
+  setFieldValue,
+  touched,
+  errors,
 }) => {
   const center = {
     lat: -31.417543,
     lng: -64.1873587,
   };
   const classes = useStyles();
-  const [marker, setMarker] = useState(center);
+  const [marker, setMarker] = useState();
   const [mapActive, setMapActive] = useState(false);
-  const [defaultCenterMap, setDefaultCenterMap] = useState(
-    cities.find((c) => c.id === orderData.city)
-  );
+
   const onMapClick = useCallback((event) => {
     setMarker({
       lat: event.latLng.lat(),
@@ -80,26 +80,28 @@ const DeliveryAddress = ({
   }, []);
 
   useEffect(() => {
-    fetch(
-      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${marker.lat}&lon=${marker.lng}`,
-      {
-        params: {
-          email: "agu.98.98@gmai.com",
-          "accept-language": "es", // render results in Dutch
-          countrycodes: "arg", // limit search results to the Netherlands
-          addressdetails: 1, // include additional address detail parts
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        handleSelectedLocation(
-          result.address.road,
-          result.address.house_number,
-          result.address.city || result.address.town
-        );
-      });
+    if (marker) {
+      fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${marker.lat}&lon=${marker.lng}`,
+        {
+          params: {
+            email: "agu.98.98@gmai.com",
+            "accept-language": "es", // render results in Dutch
+            countrycodes: "arg", // limit search results to the Netherlands
+            addressdetails: 1, // include additional address detail parts
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          setFieldValue("addressPickUp", result.address.road);
+          setFieldValue("numberPickUp", result.address.house_number);
+          setFieldValue(
+            "cityPickUp",
+            result.address.city || result.address.town
+          );
+        });
+    }
   }, [marker]);
   return (
     <>
@@ -109,10 +111,10 @@ const DeliveryAddress = ({
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
-            required
             id="cityPickUp"
             name="cityPickUp"
             label="Ciudad"
+            error={touched?.cityPickUp && Boolean(errors.cityPickUp)}
             disabled={mapActive}
             value={orderData.cityPickUp}
             onChange={handleChange}
@@ -121,10 +123,10 @@ const DeliveryAddress = ({
         </Grid>
         <Grid item xs={8}>
           <TextField
-            required
             id="addressPickUp"
             name="addressPickUp"
             label="Calle"
+            error={touched?.addressPickUp && Boolean(errors.addressPickUp)}
             disabled={mapActive}
             value={orderData.addressPickUp}
             onChange={handleChange}
@@ -133,12 +135,12 @@ const DeliveryAddress = ({
         </Grid>
         <Grid item xs={4}>
           <TextField
-            required
             id="numberPickUp"
             name="numberPickUp"
             label="Numero"
+            error={touched?.numberPickUp && Boolean(errors.numberPickUp)}
             type="number"
-            disabled={mapActive}
+            disabled={mapActive && orderData.numberPickUp}
             value={orderData.numberPickUp}
             onChange={handleChange}
             fullWidth
@@ -192,6 +194,7 @@ const DeliveryAddress = ({
             select
             label="Ciudad"
             name="cityDelivery"
+            error={touched?.cityDelivery && Boolean(errors.cityDelivery)}
             value={orderData.cityDelivery}
             fullWidth
             onChange={(e) => {
@@ -205,9 +208,9 @@ const DeliveryAddress = ({
         </Grid>
         <Grid item xs={8}>
           <TextField
-            required
             id="addressDelivery"
             name="addressDelivery"
+            error={touched?.addressDelivery && Boolean(errors.addressDelivery)}
             label="Calle"
             value={orderData.addressDelivery}
             onChange={handleChange}
@@ -216,11 +219,11 @@ const DeliveryAddress = ({
         </Grid>
         <Grid item xs={4}>
           <TextField
-            required
             id="numberDelivery"
             name="numberDelivery"
             label="Numero"
             type="number"
+            error={touched?.numberDelivery && Boolean(errors.numberDelivery)}
             value={orderData.numberDelivery}
             onChange={handleChange}
             fullWidth
@@ -248,6 +251,7 @@ const DeliveryAddress = ({
             fullWidth
             name="immediately"
             id="immediately"
+            error={touched?.immediately && Boolean(errors.immediately)}
             value={orderData.immediately}
             onChange={handleChange}
           >
@@ -263,8 +267,11 @@ const DeliveryAddress = ({
               name="date"
               id="date"
               ampm
+              error={touched?.date && Boolean(errors.date)}
               value={orderData.date}
-              onChange={handleSelectedDate}
+              onChange={(date) => {
+                setFieldValue("date", date);
+              }}
               label="Seleccione fecha y hora"
               format="dd/MM/yyyy HH:mm"
             />

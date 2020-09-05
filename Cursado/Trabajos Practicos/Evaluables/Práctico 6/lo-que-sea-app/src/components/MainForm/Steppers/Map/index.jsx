@@ -29,11 +29,13 @@ const MapGoogle = (props) => {
         onLoad={onMapLoad}
         onClick={props.onClick}
       >
-        <Marker
-          onDragEnd={props.onClick}
-          draggable
-          position={{ lat: props.marker.lat, lng: props.marker.lng }}
-        />
+        {props.marker && (
+          <Marker
+            onDragEnd={props.onClick}
+            draggable
+            position={{ lat: props.marker.lat, lng: props.marker.lng }}
+          />
+        )}
       </GoogleMap>
     </LoadScript>
   );
