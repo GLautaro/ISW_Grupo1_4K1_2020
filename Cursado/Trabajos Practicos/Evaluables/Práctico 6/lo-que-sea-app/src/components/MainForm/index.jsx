@@ -131,11 +131,6 @@ const MainForm = () => {
   };
   const [orderData, setOrderData] = useState(initialOrderData);
 
-  const handleChange_2 = (e) => {
-    const { name, value } = e.target;
-    setOrderData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
   const handleSelectedDate = (e) => {
     setOrderData((prevState) => ({ ...prevState, date: e }));
   };
@@ -208,11 +203,9 @@ const MainForm = () => {
     setActiveStep(activeStep - 1);
   };
   const handleSubmitForm = () => {
-    console.log("pasa");
     if (activeStep === 3) {
       console.log("Ready");
     } else {
-      console.log("Pasa");
       handleNext();
     }
   };
