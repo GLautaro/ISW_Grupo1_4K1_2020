@@ -7,6 +7,7 @@ import {
   StepLabel,
   Step,
   Button,
+  Grid,
 } from "@material-ui/core";
 import { useState } from "react";
 import OrderData from "./Steppers/OrderData";
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 const steps = [
   "Datos del Pedido",
   "Dirección del Pedido",
-  "Metodo de Pago",
+  "Método de Pago",
   "Resumen",
 ];
 
@@ -73,8 +74,8 @@ let validationSchema = [
     referenceDelivery: yup.string(),
     immediately: yup.boolean(),
     date: yup.date().when("immediately", {
-      is: true,
-      then: yup.date().required(),
+      is: false,
+      then: yup.date().min(new Date()).required(),
     }),
   }),
   yup.object().shape({
@@ -93,7 +94,32 @@ let validationSchema = [
     }),
     expDate: yup.string().when("cash", {
       is: false,
-      then: yup.string().length(5).required(),
+      then: yup
+        .string()
+        .test("is-exp-date", "Error en la fecha", (value) => {
+          if (value) {
+            const month = Number(value.substr(0, 2));
+            const year = Number(value.substr(value.length - 2));
+            const currentYear = Number(
+              new Date().getFullYear().toString().substr(2)
+            );
+            const currentMonth = Number((new Date().getMonth() + 1).toString());
+            console.log(month);
+            console.log(year);
+            console.log(currentYear);
+            console.log(currentMonth);
+            if (year > currentYear) {
+              return true;
+            } else {
+              if (year === currentYear && month >= currentMonth) {
+                return true;
+              }
+            }
+          }
+          return false;
+        })
+        .length(5)
+        .required(),
     }),
     cvv: yup.string().when("cash", {
       is: false,
@@ -107,7 +133,10 @@ let validationSchema = [
 ];
 const MainForm = () => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
+  const [marker, setMarker] = useState();
+  const [addressNumberMap, setAddressNumberMap] = useState();
+
   const initialOrderData = {
     description: "",
     images: [],
@@ -119,6 +148,7 @@ const MainForm = () => {
     numberDelivery: "",
     cityDelivery: "",
     referenceDelivery: "",
+    mapActive: false,
     immediately: true,
     date: new Date(),
     cash: true,
@@ -167,6 +197,10 @@ const MainForm = () => {
       case 1:
         return (
           <DeliveryAddress
+            marker={marker}
+            setMarker={setMarker}
+            addressNumberMap={addressNumberMap}
+            setAddressNumberMap={setAddressNumberMap}
             orderData={values}
             setFieldValue={setFieldValue}
             errors={errors}
@@ -202,9 +236,11 @@ const MainForm = () => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const handleSubmitForm = () => {
+  const handleSubmitForm = (values, { resetForm }) => {
     if (activeStep === 3) {
       console.log("Ready");
+      handleNext();
+      resetForm({});
     } else {
       handleNext();
     }
@@ -225,29 +261,56 @@ const MainForm = () => {
   return (
     <div className={classes.layout}>
       <Paper className={classes.paper}>
-        <Typography component="h1" variant="h4" align="center" gutterBottom>
-          Pedi lo que sea
-        </Typography>
-        <Typography variant="body1" align="center" gutterBottom>
-          Buscaremos en tu ciudad para llevarte lo que necesites
-        </Typography>
-        <Stepper activeStep={activeStep} className={classes.stepper}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+        {activeStep < 4 && (
+          <>
+            <Typography component="h1" variant="h5" align="center" gutterBottom>
+              <b> Pedí lo que sea</b>
+            </Typography>
+            <Typography variant="body1" align="center" gutterBottom>
+              Buscaremos en tu ciudad para llevarte lo que necesites
+            </Typography>
+
+            <Stepper activeStep={activeStep} className={classes.stepper}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </>
+        )}
         <>
           {activeStep === steps.length ? (
             <>
-              <Typography variant="h5" gutterBottom>
-                Gracias por realizar tu pedido!
-              </Typography>
-              <Typography variant="subtitle1">
-                Tu numero de pedido es #1234. Puedes seguir tu pedido a traves
-                del mapa interactivo. Recorda lavarte las manos.
-              </Typography>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                justify="center"
+              >
+                <Grid item>
+                  <Typography variant="h5" align="center" gutterBottom>
+                    Gracias por realizar tu pedido!
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <img src="images/box-heart.png" align="center" width={250} />
+                </Grid>
+                <Grid item>
+                  <Typography variant="subtitle1" align="center">
+                    Tu número de pedido es #1234. Puedes seguir tu pedido a
+                    traves del mapa interactivo. Recordá lavarte las manos.
+                  </Typography>
+                </Grid>
+              </Grid>
+              <div className={classes.buttons}>
+                <Button
+                  onClick={() => setActiveStep(0)}
+                  className={classes.button}
+                >
+                  Realizar otro pedido
+                </Button>
+              </div>
             </>
           ) : (
             <>

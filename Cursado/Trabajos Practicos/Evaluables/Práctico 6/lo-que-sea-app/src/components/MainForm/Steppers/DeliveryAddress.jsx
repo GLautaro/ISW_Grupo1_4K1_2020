@@ -63,14 +63,16 @@ const DeliveryAddress = ({
   setFieldValue,
   touched,
   errors,
+  setMarker,
+  marker,
+  addressNumberMap,
+  setAddressNumberMap,
 }) => {
   const center = {
     lat: -31.417543,
     lng: -64.1873587,
   };
   const classes = useStyles();
-  const [marker, setMarker] = useState();
-  const [mapActive, setMapActive] = useState(false);
 
   const onMapClick = useCallback((event) => {
     setMarker({
@@ -94,12 +96,13 @@ const DeliveryAddress = ({
       )
         .then((res) => res.json())
         .then((result) => {
-          setFieldValue("addressPickUp", result.address.road);
-          setFieldValue("numberPickUp", result.address.house_number);
+          setFieldValue("addressPickUp", result.address.road || "");
+          setFieldValue("numberPickUp", result.address.house_number || "");
           setFieldValue(
             "cityPickUp",
-            result.address.city || result.address.town
+            result.address.city || result.address.town || ""
           );
+          setAddressNumberMap(result.address.house_number || "");
         });
     }
   }, [marker]);
@@ -115,7 +118,7 @@ const DeliveryAddress = ({
             name="cityPickUp"
             label="Ciudad"
             error={touched?.cityPickUp && Boolean(errors.cityPickUp)}
-            disabled={mapActive}
+            disabled={orderData.mapActive}
             value={orderData.cityPickUp}
             onChange={handleChange}
             fullWidth
@@ -127,7 +130,7 @@ const DeliveryAddress = ({
             name="addressPickUp"
             label="Calle"
             error={touched?.addressPickUp && Boolean(errors.addressPickUp)}
-            disabled={mapActive}
+            disabled={orderData.mapActive}
             value={orderData.addressPickUp}
             onChange={handleChange}
             fullWidth
@@ -137,10 +140,10 @@ const DeliveryAddress = ({
           <TextField
             id="numberPickUp"
             name="numberPickUp"
-            label="Numero"
+            label="Número"
             error={touched?.numberPickUp && Boolean(errors.numberPickUp)}
             type="number"
-            disabled={mapActive && orderData.numberPickUp}
+            disabled={orderData.mapActive && addressNumberMap}
             value={orderData.numberPickUp}
             onChange={handleChange}
             fullWidth
@@ -161,8 +164,8 @@ const DeliveryAddress = ({
           <FormControlLabel
             control={
               <Switch
-                checked={mapActive}
-                onChange={() => setMapActive(!mapActive)}
+                checked={orderData.mapActive}
+                onChange={handleChange}
                 name="mapActive"
                 color="primary"
               />
@@ -171,7 +174,7 @@ const DeliveryAddress = ({
             label="Seleccionar ubicación en mapa"
           />
         </Grid>
-        {mapActive && (
+        {orderData.mapActive && (
           <Grid item xs={12}>
             <MapGoogle
               width={500}
@@ -262,8 +265,8 @@ const DeliveryAddress = ({
         {!orderData.immediately && (
           <Grid item xs={12}>
             <DateTimePicker
-              disablePast
               fullWidth
+              disablePast
               name="date"
               id="date"
               ampm

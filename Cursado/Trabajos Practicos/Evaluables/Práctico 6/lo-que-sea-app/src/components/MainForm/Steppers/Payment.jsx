@@ -7,10 +7,17 @@ import {
   Select,
   MenuItem,
   InputAdornment,
+  useTheme,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import MaskedInput from "react-text-mask";
 import createAutoCorrectedDatePipe from "text-mask-addons/dist/createAutoCorrectedDatePipe";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMoneyBillAlt,
+  faCreditCard,
+} from "@fortawesome/free-solid-svg-icons";
+import { faCcVisa } from "@fortawesome/free-brands-svg-icons";
 
 const useStyles = makeStyles((theme) => ({
   fileLabel: {
@@ -29,6 +36,7 @@ const Payment = ({
   errors,
   touched,
 }) => {
+  const theme = useTheme();
   const classes = useStyles();
   return (
     <>
@@ -48,8 +56,22 @@ const Payment = ({
             value={orderData.cash}
             onChange={handleChange}
           >
-            <MenuItem value={true}>Efectivo</MenuItem>
-            <MenuItem value={false}>Tarjeta</MenuItem>
+            <MenuItem value={true}>
+              <FontAwesomeIcon
+                style={{ marginRight: 5 }}
+                icon={faMoneyBillAlt}
+                color={theme.palette.secondary.main}
+              />
+              Efectivo
+            </MenuItem>
+            <MenuItem value={false}>
+              <FontAwesomeIcon
+                style={{ marginRight: 5 }}
+                icon={faCreditCard}
+                color={theme.palette.secondary.main}
+              />
+              Tarjeta
+            </MenuItem>
           </Select>
         </Grid>
       </Grid>
@@ -60,7 +82,7 @@ const Payment = ({
               id="cardName"
               name="cardName"
               error={touched?.cardName && Boolean(errors.cardName)}
-              label="Nombre y apellido"
+              label="Nombre y apellido del titular"
               value={orderData.cardName}
               onChange={handleChange}
               fullWidth
@@ -71,7 +93,7 @@ const Payment = ({
               name="cardNumber"
               id="cardNumber"
               error={touched?.cardNumber && Boolean(errors.cardNumber)}
-              label="Numero de tarjeta"
+              label="Número de tarjeta"
               helperText="4XXX XXXX XXXX XXXX"
               onChange={handleChange}
               value={orderData.cardNumber}
@@ -79,6 +101,11 @@ const Payment = ({
               InputProps={{
                 inputComponent: VisaMask,
               }}
+            />
+            <FontAwesomeIcon
+              size="2x"
+              icon={faCcVisa}
+              color={theme.palette.secondary.main}
             />
           </Grid>
           <Grid item xs={12} md={6}>

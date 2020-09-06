@@ -63,7 +63,7 @@ const Review = ({ orderData }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Metodo de Pago
+            Método de Pago
           </Typography>
           {orderData.cash ? (
             <Typography
@@ -76,7 +76,9 @@ const Review = ({ orderData }) => {
                 {`Titular: ${orderData.cardName}`}
               </Typography>
               <Typography gutterBottom>
-                {`Numero: ${orderData.cardNumber}`}
+                {`Número: 4XXX-XXXX-XXXX-${orderData.cardNumber.substr(
+                  orderData.cardNumber.length - 4
+                )}`}
               </Typography>
               <Typography gutterBottom>
                 {`Fecha de Vencimiento: ${orderData.expDate}`}
