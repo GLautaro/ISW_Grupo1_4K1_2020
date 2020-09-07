@@ -1,7 +1,8 @@
-import React from "react";
-import { Typography, Grid, TextField, InputLabel } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { DropzoneArea } from "material-ui-dropzone";
+import React from 'react';
+import { Typography, Grid, TextField, InputLabel } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { DropzoneArea } from 'material-ui-dropzone';
+import { PropTypes } from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   fileLabel: {
@@ -13,15 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OrderData = ({
-  orderData,
-  handleChange,
-  handleImageUpload,
-  touched,
-  errors,
-  setFieldValue,
-  handleSelectedDate,
-}) => {
+const OrderData = ({ orderData, handleChange, touched, errors, setFieldValue }) => {
   const classes = useStyles();
 
   return (
@@ -34,7 +27,7 @@ const OrderData = ({
           <TextField
             id="description"
             name="description"
-            error={touched?.description && Boolean(errors.description)}
+            error={touched.description && Boolean(errors.description)}
             label="¿Qué quieres que te llevemos?"
             value={orderData.description}
             onChange={handleChange}
@@ -42,22 +35,28 @@ const OrderData = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <InputLabel className={classes.fileLabel}>
-            Adjuntar aqui su imagen
-          </InputLabel>
+          <InputLabel className={classes.fileLabel}>Adjuntar aqui su imagen</InputLabel>
           <DropzoneArea
             dropzoneText="Haz click o arrastra aqui tu imagen"
             maxFileSize={5000000}
-            acceptedFiles={["image/jpeg"]}
+            acceptedFiles={['image/jpeg']}
             onChange={(image) => {
               console.log(image);
-              setFieldValue("images", image);
+              setFieldValue('images', image);
             }}
           />
         </Grid>
       </Grid>
     </>
   );
+};
+
+OrderData.propTypes = {
+  orderData: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  touched: PropTypes.any.isRequired,
+  errors: PropTypes.any.isRequired,
 };
 
 export default OrderData;

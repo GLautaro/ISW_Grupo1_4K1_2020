@@ -1,6 +1,7 @@
-import React from "react";
-import { Typography, Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import { Typography, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -66,29 +67,27 @@ const Review = ({ orderData }) => {
             Método de Pago
           </Typography>
           {orderData.cash ? (
-            <Typography
-              gutterBottom
-            >{`Efectivo: $${orderData.amount}`}</Typography>
+            <Typography gutterBottom>{`Efectivo: $${orderData.amount}`}</Typography>
           ) : (
             <>
               <Typography gutterBottom>Tarjeta de Credito Visa</Typography>
-              <Typography gutterBottom>
-                {`Titular: ${orderData.cardName}`}
-              </Typography>
+              <Typography gutterBottom>{`Titular: ${orderData.cardName}`}</Typography>
               <Typography gutterBottom>
                 {`Número: 4XXX-XXXX-XXXX-${orderData.cardNumber.substr(
-                  orderData.cardNumber.length - 4
+                  orderData.cardNumber.length - 4,
                 )}`}
               </Typography>
-              <Typography gutterBottom>
-                {`Fecha de Vencimiento: ${orderData.expDate}`}
-              </Typography>
+              <Typography gutterBottom>{`Fecha de Vencimiento: ${orderData.expDate}`}</Typography>
             </>
           )}
         </Grid>
       </Grid>
     </>
   );
+};
+
+Review.propTypes = {
+  orderData: PropTypes.object.isRequired,
 };
 
 export default Review;

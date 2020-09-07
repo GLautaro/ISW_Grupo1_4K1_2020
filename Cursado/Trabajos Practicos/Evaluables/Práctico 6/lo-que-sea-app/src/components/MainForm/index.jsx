@@ -1,31 +1,22 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  Paper,
-  Typography,
-  Stepper,
-  StepLabel,
-  Step,
-  Button,
-  Grid,
-} from "@material-ui/core";
-import { useState } from "react";
-import OrderData from "./Steppers/OrderData";
-import Payment from "./Steppers/Payment";
-import Review from "./Steppers/Review";
-import DeliveryAddress, { cities } from "./Steppers/DeliveryAddress";
-import * as yup from "yup";
-import Formik, { useFormik } from "formik";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Paper, Typography, Stepper, StepLabel, Step, Button, Grid } from '@material-ui/core';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import OrderData from './Steppers/OrderData';
+import Review from './Steppers/Review';
+import Payment from './Steppers/Payment';
+import DeliveryAddress from './Steppers/DeliveryAddress';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
-    width: "auto",
+    width: 'auto',
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
-      marginLeft: "auto",
-      marginRight: "auto",
+      marginLeft: 'auto',
+      marginRight: 'auto',
     },
   },
   paper: {
@@ -42,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 0, 5),
   },
   buttons: {
-    display: "flex",
-    justifyContent: "flex-end",
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
   button: {
     marginTop: theme.spacing(3),
@@ -51,16 +42,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = [
-  "Datos del Pedido",
-  "Dirección del Pedido",
-  "Método de Pago",
-  "Resumen",
-];
+const initialOrderData = {
+  description: '',
+  images: [],
+  addressPickUp: '',
+  numberPickUp: '',
+  cityPickUp: '',
+  referencePickUp: '',
+  addressDelivery: '',
+  numberDelivery: '',
+  cityDelivery: '',
+  referenceDelivery: '',
+  mapActive: false,
+  immediately: true,
+  date: new Date(),
+  cash: true,
+  amount: '',
+  cardNumber: '',
+  cardName: '',
+  expDate: '',
+  cvv: '',
+  dni: '',
+};
 
-let validationSchema = [
+const steps = ['Datos del Pedido', 'Dirección del Pedido', 'Método de Pago', 'Resumen'];
+
+const validationSchema = [
   yup.object().shape({
-    description: yup.string().required("Debe ingresar una descripción"),
+    description: yup.string().required('Debe ingresar una descripción'),
     images: yup.array(),
   }),
   yup.object().shape({
@@ -73,47 +82,41 @@ let validationSchema = [
     cityDelivery: yup.string().required(),
     referenceDelivery: yup.string(),
     immediately: yup.boolean(),
-    date: yup.date().when("immediately", {
+    date: yup.date().when('immediately', {
       is: false,
       then: yup.date().min(new Date()).required(),
     }),
   }),
   yup.object().shape({
     cash: yup.boolean().required(),
-    amount: yup.number().when("cash", {
+    amount: yup.number().when('cash', {
       is: true,
       then: yup.number().required(),
     }),
-    cardNumber: yup.string().when("cash", {
+    cardNumber: yup.string().when('cash', {
       is: false,
       then: yup.string().required().length(19),
     }),
-    cardName: yup.string().when("cash", {
+    cardName: yup.string().when('cash', {
       is: false,
       then: yup.string().required(),
     }),
-    expDate: yup.string().when("cash", {
+    expDate: yup.string().when('cash', {
       is: false,
       then: yup
         .string()
-        .test("is-exp-date", "Error en la fecha", (value) => {
+        .test('is-exp-date', 'Error en la fecha', (value) => {
           if (value) {
             const month = Number(value.substr(0, 2));
             const year = Number(value.substr(value.length - 2));
-            const currentYear = Number(
-              new Date().getFullYear().toString().substr(2)
-            );
+            const currentYear = Number(new Date().getFullYear().toString().substr(2));
             const currentMonth = Number((new Date().getMonth() + 1).toString());
-            console.log(month);
-            console.log(year);
-            console.log(currentYear);
-            console.log(currentMonth);
+
             if (year > currentYear) {
               return true;
-            } else {
-              if (year === currentYear && month >= currentMonth) {
-                return true;
-              }
+            }
+            if (year === currentYear && month >= currentMonth) {
+              return true;
             }
           }
           return false;
@@ -121,11 +124,11 @@ let validationSchema = [
         .length(5)
         .required(),
     }),
-    cvv: yup.string().when("cash", {
+    cvv: yup.string().when('cash', {
       is: false,
       then: yup.string().length(4).required(),
     }),
-    dni: yup.string().when("cash", {
+    dni: yup.string().when('cash', {
       is: false,
       then: yup.string().required(),
     }),
@@ -133,32 +136,10 @@ let validationSchema = [
 ];
 const MainForm = () => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(0);
   const [marker, setMarker] = useState();
   const [addressNumberMap, setAddressNumberMap] = useState();
 
-  const initialOrderData = {
-    description: "",
-    images: [],
-    addressPickUp: "",
-    numberPickUp: "",
-    cityPickUp: "",
-    referencePickUp: "",
-    addressDelivery: "",
-    numberDelivery: "",
-    cityDelivery: "",
-    referenceDelivery: "",
-    mapActive: false,
-    immediately: true,
-    date: new Date(),
-    cash: true,
-    amount: "",
-    cardNumber: "",
-    cardName: "",
-    expDate: "",
-    cvv: "",
-    dni: "",
-  };
   const [orderData, setOrderData] = useState(initialOrderData);
 
   const handleSelectedDate = (e) => {
@@ -168,18 +149,40 @@ const MainForm = () => {
   const handleSelectedLocation = (address, number, city) => {
     setOrderData((prevState) => ({
       ...prevState,
-      addressPickUp: address || "",
-      numberPickUp: number || "",
-      cityPickUp: city || "",
+      addressPickUp: address || '',
+      numberPickUp: number || '',
+      cityPickUp: city || '',
     }));
   };
 
   const handleImageUpload = (image) => {
-    let imageArray = orderData.images;
+    const imageArray = orderData.images;
     imageArray.push(image);
     setOrderData((prevState) => ({ ...prevState, images: imageArray }));
   };
+  const handleNext = () => {
+    console.log(orderData);
+    setActiveStep(activeStep + 1);
+  };
 
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+  const handleSubmitForm = (values, { resetForm }) => {
+    if (activeStep === 3) {
+      console.log('Ready');
+      handleNext();
+      resetForm({});
+    } else {
+      handleNext();
+    }
+  };
+
+  const { handleChange, handleSubmit, values, errors, touched, setFieldValue } = useFormik({
+    initialValues: initialOrderData,
+    validationSchema: validationSchema[activeStep],
+    onSubmit: handleSubmitForm,
+  });
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -224,40 +227,10 @@ const MainForm = () => {
       case 3:
         return <Review orderData={values} />;
       default:
-        throw new Error("Unknown step");
+        throw new Error('Unknown step');
     }
   };
 
-  const handleNext = () => {
-    console.log(orderData);
-    setActiveStep(activeStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
-  const handleSubmitForm = (values, { resetForm }) => {
-    if (activeStep === 3) {
-      console.log("Ready");
-      handleNext();
-      resetForm({});
-    } else {
-      handleNext();
-    }
-  };
-
-  const {
-    handleChange,
-    handleSubmit,
-    values,
-    errors,
-    touched,
-    setFieldValue,
-  } = useFormik({
-    initialValues: initialOrderData,
-    validationSchema: validationSchema[activeStep],
-    onSubmit: handleSubmitForm,
-  });
   return (
     <div className={classes.layout}>
       <Paper className={classes.paper}>
@@ -282,32 +255,24 @@ const MainForm = () => {
         <>
           {activeStep === steps.length ? (
             <>
-              <Grid
-                container
-                direction="column"
-                alignItems="center"
-                justify="center"
-              >
+              <Grid container direction="column" alignItems="center" justify="center">
                 <Grid item>
                   <Typography variant="h5" align="center" gutterBottom>
                     Gracias por realizar tu pedido!
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <img src="images/box-heart.png" align="center" width={250} />
+                  <img src="images/box-heart.png" alt="box-heart" align="center" width={250} />
                 </Grid>
                 <Grid item>
                   <Typography variant="subtitle1" align="center">
-                    Tu número de pedido es #1234. Puedes seguir tu pedido a
-                    traves del mapa interactivo. Recordá lavarte las manos.
+                    Tu número de pedido es #1234. Puedes seguir tu pedido a traves del mapa
+                    interactivo. Recordá lavarte las manos.
                   </Typography>
                 </Grid>
               </Grid>
               <div className={classes.buttons}>
-                <Button
-                  onClick={() => setActiveStep(0)}
-                  className={classes.button}
-                >
+                <Button onClick={() => setActiveStep(0)} className={classes.button}>
                   Realizar otro pedido
                 </Button>
               </div>
@@ -328,9 +293,7 @@ const MainForm = () => {
                     color="primary"
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1
-                      ? "Confirmar"
-                      : "Siguiente"}
+                    {activeStep === steps.length - 1 ? 'Confirmar' : 'Siguiente'}
                   </Button>
                 </div>
               </form>
