@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Typography, Stepper, StepLabel, Step, Button, Grid } from '@material-ui/core';
+import { Typography, Stepper, StepLabel, Step, Button, Grid, StepContent } from '@material-ui/core';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import OrderData from './Steppers/OrderData';
@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     width: 'auto',
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
+    marginTop: theme.spacing(5),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
       marginLeft: 'auto',
@@ -136,7 +137,7 @@ const validationSchema = [
 ];
 const MainForm = () => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(3);
   const [marker, setMarker] = useState();
   const [addressNumberMap, setAddressNumberMap] = useState();
 
@@ -233,8 +234,32 @@ const MainForm = () => {
 
   return (
     <div className={classes.layout}>
-      <Paper className={classes.paper}>
-        {activeStep < 4 && (
+      <>
+        {activeStep === steps.length ? (
+          <>
+            <Grid container direction="column" alignItems="center" justify="center">
+              <Grid item>
+                <Typography variant="h5" align="center" gutterBottom>
+                  Gracias por realizar tu pedido!
+                </Typography>
+              </Grid>
+              <Grid item>
+                <img src="images/box-heart.png" alt="box-heart" align="center" width={250} />
+              </Grid>
+              <Grid item>
+                <Typography variant="subtitle1" align="center">
+                  Tu número de pedido es #1234. Puedes seguir tu pedido a traves del mapa
+                  interactivo. Recordá lavarte las manos.
+                </Typography>
+              </Grid>
+            </Grid>
+            <div className={classes.buttons}>
+              <Button onClick={() => setActiveStep(0)} className={classes.button}>
+                Realizar otro pedido
+              </Button>
+            </div>
+          </>
+        ) : (
           <>
             <Typography component="h1" variant="h5" align="center" gutterBottom>
               <b> Pedí lo que sea</b>
@@ -242,65 +267,38 @@ const MainForm = () => {
             <Typography variant="body1" align="center" gutterBottom>
               Buscaremos en tu ciudad para llevarte lo que necesites
             </Typography>
-
-            <Stepper activeStep={activeStep} className={classes.stepper}>
+            <Stepper activeStep={activeStep} orientation="vertical" className={classes.stepper}>
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
+                  <StepContent>
+                    <>
+                      <form onSubmit={handleSubmit}>
+                        {getStepContent(activeStep)}
+                        <div className={classes.buttons}>
+                          {activeStep !== 0 && (
+                            <Button onClick={handleBack} className={classes.button}>
+                              Atras
+                            </Button>
+                          )}
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                          >
+                            {activeStep === steps.length - 1 ? 'Confirmar' : 'Siguiente'}
+                          </Button>
+                        </div>
+                      </form>
+                    </>
+                  </StepContent>
                 </Step>
               ))}
             </Stepper>
           </>
         )}
-        <>
-          {activeStep === steps.length ? (
-            <>
-              <Grid container direction="column" alignItems="center" justify="center">
-                <Grid item>
-                  <Typography variant="h5" align="center" gutterBottom>
-                    Gracias por realizar tu pedido!
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <img src="images/box-heart.png" alt="box-heart" align="center" width={250} />
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle1" align="center">
-                    Tu número de pedido es #1234. Puedes seguir tu pedido a traves del mapa
-                    interactivo. Recordá lavarte las manos.
-                  </Typography>
-                </Grid>
-              </Grid>
-              <div className={classes.buttons}>
-                <Button onClick={() => setActiveStep(0)} className={classes.button}>
-                  Realizar otro pedido
-                </Button>
-              </div>
-            </>
-          ) : (
-            <>
-              <form onSubmit={handleSubmit}>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Atras
-                    </Button>
-                  )}
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Confirmar' : 'Siguiente'}
-                  </Button>
-                </div>
-              </form>
-            </>
-          )}
-        </>
-      </Paper>
+      </>
     </div>
   );
 };

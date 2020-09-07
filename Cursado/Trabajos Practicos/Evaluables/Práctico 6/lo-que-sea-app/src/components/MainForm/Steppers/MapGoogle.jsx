@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, useLoadScript } from '@react-google-maps/api';
 import PropTypes from 'prop-types';
 
 const MapGoogle = ({ height, defaultCenter, marker, onClick }) => {
@@ -9,28 +9,37 @@ const MapGoogle = ({ height, defaultCenter, marker, onClick }) => {
   };
 
   // eslint-disable-next-line no-unused-vars
-  const [defaultCenterPosition, setDefaultCenterPosition] = useState(defaultCenter);
+  const [defaultCenterPosition, setDefaultCenterPosition] = useState(
+    (marker && { lat: marker.lat, lng: marker.lng }) || defaultCenter,
+  );
 
   const mapRef = useRef(null);
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: 'AIzaSyCDxRvYulY_3uucQau-rk8sgkk_qLr6jyg',
+  });
 
-  return (
-    <LoadScript googleMapsApiKey="AIzaSyCDxRvYulY_3uucQau-rk8sgkk_qLr6jyg">
-      <GoogleMap
-        id="map"
-        mapContainerStyle={containerStyle}
-        center={defaultCenterPosition}
-        zoom={14}
-        onLoad={onMapLoad}
-        onClick={onClick}
-      >
-        {marker && (
-          <Marker onDragEnd={onClick} draggable position={{ lat: marker.lat, lng: marker.lng }} />
-        )}
-      </GoogleMap>
-    </LoadScript>
+  if (loadError) {
+    return <div>No se pudo cargar el mapa.</div>;
+  }
+
+  return !isLoaded ? (
+    <div>Loading...</div>
+  ) : (
+    <GoogleMap
+      id="map"
+      mapContainerStyle={containerStyle}
+      center={defaultCenterPosition}
+      zoom={14}
+      onLoad={onMapLoad}
+      onClick={onClick}
+    >
+      {marker && (
+        <Marker onDragEnd={onClick} draggable position={{ lat: marker.lat, lng: marker.lng }} />
+      )}
+    </GoogleMap>
   );
 };
 MapGoogle.propTypes = {
