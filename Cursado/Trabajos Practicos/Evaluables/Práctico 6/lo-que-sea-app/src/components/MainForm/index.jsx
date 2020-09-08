@@ -137,7 +137,7 @@ const validationSchema = [
 ];
 const MainForm = () => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(3);
+  const [activeStep, setActiveStep] = useState(0);
   const [marker, setMarker] = useState();
   const [addressNumberMap, setAddressNumberMap] = useState();
 

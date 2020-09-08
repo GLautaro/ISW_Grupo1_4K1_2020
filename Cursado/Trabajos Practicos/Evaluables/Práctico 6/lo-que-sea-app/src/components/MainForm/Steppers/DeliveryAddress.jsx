@@ -242,6 +242,7 @@ const DeliveryAddress = ({
               }}
               label="Seleccione fecha y hora"
               format="dd/MM/yyyy HH:mm"
+              minutesStep={30}
             />
           </Grid>
         )}
