@@ -75,11 +75,11 @@ const validationSchema = [
   }),
   yup.object().shape({
     addressPickUp: yup.string().required(),
-    numberPickUp: yup.number().required(),
+    numberPickUp: yup.number().min(0).required(),
     cityPickUp: yup.string().required(),
     referencePickUp: yup.string(),
     addressDelivery: yup.string().required(),
-    numberDelivery: yup.number().required(),
+    numberDelivery: yup.number().min(0).required(),
     cityDelivery: yup.string().required(),
     referenceDelivery: yup.string(),
     immediately: yup.boolean(),
@@ -92,7 +92,7 @@ const validationSchema = [
     cash: yup.boolean().required(),
     amount: yup.number().when('cash', {
       is: true,
-      then: yup.number().required(),
+      then: yup.number().min(0).required(),
     }),
     cardNumber: yup.string().when('cash', {
       is: false,
@@ -127,7 +127,15 @@ const validationSchema = [
     }),
     cvv: yup.string().when('cash', {
       is: false,
-      then: yup.string().length(4).required(),
+      then: yup
+        .string()
+        .test('is-cvv', 'Error cvv', (value) => {
+          if (value && (value.length === 3 || value.length === 4)) {
+            return true;
+          }
+          return false;
+        })
+        .required(),
     }),
     dni: yup.string().when('cash', {
       is: false,

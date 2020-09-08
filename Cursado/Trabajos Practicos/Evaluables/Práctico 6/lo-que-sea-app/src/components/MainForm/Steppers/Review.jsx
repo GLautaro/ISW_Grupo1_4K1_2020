@@ -70,7 +70,7 @@ const Review = ({ orderData }) => {
             <Typography gutterBottom>{`Efectivo: $${orderData.amount}`}</Typography>
           ) : (
             <>
-              <Typography gutterBottom>Tarjeta de Credito Visa</Typography>
+              <Typography gutterBottom>Tarjeta de Crédito Visa</Typography>
               <Typography gutterBottom>{`Titular: ${orderData.cardName}`}</Typography>
               <Typography gutterBottom>
                 {`Número: 4XXX-XXXX-XXXX-${orderData.cardNumber.substr(

@@ -226,6 +226,7 @@ const Payment = ({ orderData, handleChange, errors, touched }) => {
               fullWidth
               InputProps={{
                 startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                min: '0',
               }}
             />
           </Grid>
