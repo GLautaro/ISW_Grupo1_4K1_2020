@@ -57,7 +57,7 @@ const Review = ({ orderData }) => {
             <>
               <Typography gutterBottom>Programada</Typography>
               <Typography gutterBottom>
-                {`Fecha y hora de entrega: ${orderData.date.toLocaleString()}`}
+                {`Fecha y hora de entrega: ${orderData.date.toLocaleString('es-AR')}`}
               </Typography>
             </>
           )}
