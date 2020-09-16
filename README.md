@@ -68,7 +68,7 @@ ISW_Grupo1_4K1_2020
 | Configuración PWA | manifest.json | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea/public |
 | Imagenes utilziadas en la implementación | <nombre-imagen\>.(png \| jpg) | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea/public/images |
 | Configuración Prettier | .prettierrc| Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src |
-| Código Javascript  | <component\> .js | Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/public |
+| Código Javascript  | <nombre-archivo\> .js | Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/public |
 | Hoja de estilo  | index.css | Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src |
-| Código JavaScript XML | <component\> .jsx | Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src |
+| Código JavaScript XML | <nombre-componente\> .jsx | Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src |
 
