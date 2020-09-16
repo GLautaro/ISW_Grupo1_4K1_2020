@@ -60,7 +60,7 @@ ISW_Grupo1_4K1_2020
 | Material extra utilizado en Clases Teóricas | ISW_MCT_\<nombre-documento>.pdf | Cursado/Material de Clase/Teórico |
 | Templates para Parciales | ISW_Temp_\<nombre-template>.docx | Cursado/Primer Parcial Cursado/Segundo Parcial |
 | Material soporte para parciales | ISW_MSP_\<nombre-documento>.pdf | Cursado/Parciales |
-| Dependencias del proyecto | package.json | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea |
+| Dependencias de la implementación | package.json | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea |
 | Archivo de bloqueo de dependendencia (Yarn) | yarn.lock | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea |
 | Configuración ESlint | .eslintrc.json | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea |
 | Documentación sobre la implementación | README.md | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea |
@@ -68,7 +68,7 @@ ISW_Grupo1_4K1_2020
 | Configuración PWA | manifest.json | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea/public |
 | Imagenes utilziadas en la implementación | <nombre-imagen\>.(png \| jpg) | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea/public/images |
 | Configuración Prettier | .prettierrc| Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src |
-| Código Javascript  | <component\> .js | Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src |
+| Código Javascript  | <component\> .js | Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/public |
 | Hoja de estilo  | index.css | Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src |
 | Código JavaScript XML | <component\> .jsx | Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src |
 
