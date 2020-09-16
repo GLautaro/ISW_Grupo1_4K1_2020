@@ -65,6 +65,7 @@ ISW_Grupo1_4K1_2020
 | Configuración ESlint | .eslintrc.json | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea |
 | Documentación sobre la implementación | README.md | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea |
 | Archivo Índice de la implementación| index.html| Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea/public |
+| Configuración de extensiones ignoradas por GIT | .gitignore | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea |
 | Configuración PWA | manifest.json | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea/public |
 | Imagenes utilziadas en la implementación | <nombre-imagen\>.(png \| jpg) | Cursado/Trabajos Practicos/Evaluables/Práctico 6/ lo-que-sea/public/images |
 | Configuración Prettier | .prettierrc| Cursado/Trabajos Practicos/Evaluables/Práctico 6/lo-que-sea/src |
