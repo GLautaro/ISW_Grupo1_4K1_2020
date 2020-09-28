@@ -18,7 +18,7 @@ const MapGoogle = ({ height, defaultCenter, marker, onClick }) => {
     mapRef.current = map;
   }, []);
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'API KEY GOOGLE MAPS',
+    googleMapsApiKey: 'AIzaSyCzSkIAeOlu89LkJVwdhKT8KTYNivrSWeA',
   });
 
   if (loadError) {
