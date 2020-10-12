@@ -57,7 +57,7 @@ const DeliveryAddress = ({
         `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${marker.lat}&lon=${marker.lng}`,
         {
           params: {
-            email: 'agu.98.98@gmai.com',
+            email: '',
             'accept-language': 'es', // render results in Dutch
             countrycodes: 'arg', // limit search results to the Netherlands
             addressdetails: 1, // include additional address detail parts
