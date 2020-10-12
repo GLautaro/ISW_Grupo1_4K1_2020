@@ -54,7 +54,7 @@ ISW_Grupo1_4K1_2020
 | Filmina | ISW_FILM_\<nro-filmina>_\<tema-filmina>.pdf | Cursado/Material de Clase/Teórico |
 | Trabajo Práctico No Evaluable | ISW_TPNE\<nro-tp>_\<nombre-tp>.(docx \| xlsx \| pdf)| Cursado/Trabajos prácticos/No evaluables/Práctico \<nro-tp> |
 | Trabajo Práctico Evaluable | ISW_TPE\<nro-tp>_\<nombre-tp>.(docx \| xlsx \| pdf) | Cursado/Trabajos Practicos/Evaluables/Práctico \<nro-tp> |
-| Trabajo Conceptual | ISW_TPC\<nro-tp>_\<nombre-tp>.(docx \| pdf) | Cursado/Trabajos conceptuales |
+| Trabajo Conceptual | ISW_TPC\<nro-tp>_\<nombre-tp>.(docx \| pdf \| mp4) | Cursado/Trabajos conceptuales |
 | Guia de trabajos | ISW_GUIA_\<nombre-guia>.pdf | Cursado/Material de Clase/Practico |
 | Material extra utilizado en Clases Prácticas | ISW_MCP_\<nombre-documento>.pdf | Cursado/Material de Clase/Práctico |
 | Material extra utilizado en Clases Teóricas | ISW_MCT_\<nombre-documento>.pdf | Cursado/Material de Clase/Teórico |
